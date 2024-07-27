@@ -6,7 +6,7 @@ let quotes = [
 ];
 
 // Function to show a random quote
-function displayRandomQuote() {
+function showRandomQuote() {
     if (quotes && Array.isArray(quotes) && quotes.length > 0) {
         const randomIndex = Math.floor(Math.random() * quotes.length);
         const quote = quotes[randomIndex];
@@ -58,7 +58,7 @@ function init() {
 
     // Add event listener for showing a random quote
     const showQuoteButton = document.getElementById('newQuote');
-    showQuoteButton.addEventListener('click', displayRandomQuote);
+    showQuoteButton.addEventListener('click', showRandomQuote);
 }
 
 // Call the init function on page load
