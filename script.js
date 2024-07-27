@@ -1,5 +1,5 @@
-// Check for the existence of the quotes array
-let quotes = quotes || [
+// Array to store quotes
+let quotes = [
     { text: "The only limit to our realization of tomorrow is our doubts of today.", category: "Motivation" },
     { text: "The future belongs to those who believe in the beauty of their dreams.", category: "Inspiration" },
     { text: "Do not watch the clock. Do what it does. Keep going.", category: "Time" }
@@ -45,21 +45,21 @@ function addQuote() {
 // Function to create and display the add quote form
 function createAddQuoteForm() {
     const formContainer = document.createElement('div');
-
+    
     const inputQuoteText = document.createElement('input');
     inputQuoteText.id = 'newQuoteText';
     inputQuoteText.type = 'text';
     inputQuoteText.placeholder = 'Enter a new quote';
-
+    
     const inputQuoteCategory = document.createElement('input');
     inputQuoteCategory.id = 'newQuoteCategory';
     inputQuoteCategory.type = 'text';
     inputQuoteCategory.placeholder = 'Enter quote category';
-
+    
     const addButton = document.createElement('button');
     addButton.textContent = 'Add Quote';
     addButton.onclick = addQuote;
-
+    
     formContainer.appendChild(inputQuoteText);
     formContainer.appendChild(inputQuoteCategory);
     formContainer.appendChild(addButton);
