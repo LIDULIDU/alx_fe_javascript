@@ -10,17 +10,18 @@ function displayRandomQuote() {
     if (quotes && Array.isArray(quotes) && quotes.length > 0) {
         const randomIndex = Math.floor(Math.random() * quotes.length);
         const quote = quotes[randomIndex];
-        updateQuoteDisplay(quote);
-    } else {
+        const quoteDisplay = document.getElementById('quoteDisplay');
+        quoteDisplay.innerHTML = `<blockquote>"${quote.text}"</blockquote><p><em>Category: ${quote.category}</em></p>`;
+        } else {
         console.error("Quotes array is empty or not defined.");
     }
 }
 
 // Function to update the DOM with the selected quote
-function updateQuoteDisplay(quote) {
-    const quoteDisplay = document.getElementById('quoteDisplay');
-    quoteDisplay.textContent = `"${quote.text}" - Category: ${quote.category}`;
-}
+// function updateQuoteDisplay(quote) {
+//     const quoteDisplay = document.getElementById('quoteDisplay');
+//     quoteDisplay.textContent = `"${quote.text}" - Category: ${quote.category}`;
+// }
 
 // Function to add a new quote
 function addQuote() {
