@@ -6,7 +6,7 @@ let quotes = [
 ];
 
 // Function to show a random quote
-function displayRandomQuote() {
+function showRandomQuote() {
     if (quotes && Array.isArray(quotes) && quotes.length > 0) {
         const randomIndex = Math.floor(Math.random() * quotes.length);
         const quote = quotes[randomIndex];
@@ -42,31 +42,6 @@ function addQuote() {
     }
 }
 
-// Function to create and display the add quote form
-function createAddQuoteForm() {
-    const formContainer = document.createElement('div');
-    
-    const inputQuoteText = document.createElement('input');
-    inputQuoteText.id = 'newQuoteText';
-    inputQuoteText.type = 'text';
-    inputQuoteText.placeholder = 'Enter a new quote';
-    
-    const inputQuoteCategory = document.createElement('input');
-    inputQuoteCategory.id = 'newQuoteCategory';
-    inputQuoteCategory.type = 'text';
-    inputQuoteCategory.placeholder = 'Enter quote category';
-    
-    const addButton = document.createElement('button');
-    addButton.textContent = 'Add Quote';
-    addButton.onclick = addQuote;
-    
-    formContainer.appendChild(inputQuoteText);
-    formContainer.appendChild(inputQuoteCategory);
-    formContainer.appendChild(addButton);
-
-    document.body.appendChild(formContainer);
-}
-
 // Function to display a quote in the DOM
 function displayQuote(quote) {
     const quoteList = document.getElementById('quoteList');
@@ -77,26 +52,12 @@ function displayQuote(quote) {
 
 // Initial setup to display the form and the initial quotes
 function init() {
-    createAddQuoteForm();
-
-    // Create a container to display quotes
-    const quoteListContainer = document.createElement('ul');
-    quoteListContainer.id = 'quoteList';
-    document.body.appendChild(quoteListContainer);
-
-    // Create a container to display the random quote
-    const quoteDisplay = document.createElement('div');
-    quoteDisplay.id = 'quoteDisplay';
-    document.body.appendChild(quoteDisplay);
-
     // Display initial quotes
     quotes.forEach(displayQuote);
 
     // Add event listener for showing a random quote
-    const showQuoteButton = document.createElement('button');
-    showQuoteButton.textContent = 'Show Random Quote';
-    showQuoteButton.onclick = displayRandomQuote;
-    document.body.appendChild(showQuoteButton);
+    const showQuoteButton = document.getElementById('newQuote');
+    showQuoteButton.addEventListener('click', showRandomQuote);
 }
 
 // Call the init function on page load
