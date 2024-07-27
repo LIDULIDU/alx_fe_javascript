@@ -95,7 +95,7 @@ function init() {
     // Add event listener for showing a random quote
     const showQuoteButton = document.createElement('button');
     showQuoteButton.textContent = 'Show Random Quote';
-    showQuoteButton.onclickdisplay;
+    showQuoteButton.onclick = displayRandomQuote;
     document.body.appendChild(showQuoteButton);
 }
 
