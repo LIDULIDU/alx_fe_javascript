@@ -17,13 +17,7 @@ function showRandomQuote() {
     }
 }
 
-// Function to update the DOM with the selected quote
-// function updateQuoteDisplay(quote) {
-//     const quoteDisplay = document.getElementById('quoteDisplay');
-//     quoteDisplay.textContent = `"${quote.text}" - Category: ${quote.category}`;
-// }
 
-// Function to add a new quote
 function addQuote() {
     const newQuoteText = document.getElementById('newQuoteText').value.trim();
     const newQuoteCategory = document.getElementById('newQuoteCategory').value.trim();
@@ -38,6 +32,7 @@ function addQuote() {
 
         // Update the DOM with the new quote
         displayQuote(newQuote);
+        createAddQuoteForm().appendChild(displayQuote());
     } else {
         alert("Please enter both quote text and category.");
     }
@@ -51,6 +46,15 @@ function displayQuote(quote) {
     quoteList.appendChild(li);
 }
 
+function createAddQuoteForm() {
+    const formContainer = document.createElement('div');
+    formContainer.innerHTML = `
+        <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
+        <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
+        <button onclick="addQuote()">Add Quote</button>
+    `;
+    document.body.appendChild(formContainer);
+}
 // Initial setup to display the form and the initial quotes
 function init() {
     // Display initial quotes
