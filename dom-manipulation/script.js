@@ -102,8 +102,7 @@ function init() {
     showQuoteButton.addEventListener('click', showRandomQuote);
 
     // Add export button
-    const exportButton = document.createElement('button');
-    exportButton.textContent = 'Export Quotes to JSON';
+    const exportButton = document.getElementById('button');
     exportButton.onclick = exportToJsonFile;
     document.body.appendChild(exportButton);
 
