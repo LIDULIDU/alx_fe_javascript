@@ -52,7 +52,7 @@ async function addQuote() {
 
             if (response.ok) {
                 console.log('Quote added to the server');
-                alert('Quote added and synced with the server.');
+                showMessage('Quote added and synced with the server.');
             } else {
                 console.error('Failed to add quote to the server');
             }
@@ -66,7 +66,7 @@ async function addQuote() {
         displayQuote(newQuote);
         updateCategoriesDropdown();
     } else {
-        alert("Please enter both quote text and category.");
+        showMessage("Please enter both quote text and category.");
     }
 }
 
@@ -129,7 +129,7 @@ function importFromJsonFile(event) {
         const importedQuotes = JSON.parse(event.target.result);
         quotes.push(...importedQuotes);
         saveQuotes();
-        alert('Quotes imported successfully!');
+        showMessage('Quotes imported successfully!');
         location.reload();
     };
     fileReader.readAsText(event.target.files[0]);
@@ -146,31 +146,19 @@ async function fetchQuotesFromServer() {
         saveQuotes();
         filterQuotes();
         updateCategoriesDropdown();
+        showMessage('Quotes synced with server!');
     } catch (error) {
         console.error("Failed to fetch quotes from server:", error);
     }
 }
 
-async function syncQuotesWithServer() {
-    try {
-        // Send local quotes to the server
-        for (const quote of quotes) {
-            await fetch(API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(quote)
-            });
-        }
-
-        // Fetch the latest quotes from the server
-        await fetchQuotesFromServer();
-        console.log('Quotes synced with the server');
-        alert('Quotes synced with the server.');
-    } catch (error) {
-        console.error('Error syncing quotes with the server:', error);
-    }
+function showMessage(message) {
+    const messageBox = document.getElementById('messageBox');
+    messageBox.textContent = message;
+    messageBox.style.display = 'block';
+    setTimeout(() => {
+        messageBox.style.display = 'none';
+    }, 3000); // Hide message after 3 seconds
 }
 
 function init() {
@@ -189,9 +177,6 @@ function init() {
     }
 
     setInterval(fetchQuotesFromServer, 30000); // Fetch quotes from server every 30 seconds
-
-    // Add sync quotes button event listener
-    document.getElementById('syncQuotes').addEventListener('click', syncQuotesWithServer);
 }
 
 window.onload = init;
