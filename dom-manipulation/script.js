@@ -30,7 +30,7 @@ function showRandomQuote() {
     }
 }
 
-function addQuote() {
+async function addQuote() {
     const newQuoteText = document.getElementById('newQuoteText').value.trim();
     const newQuoteCategory = document.getElementById('newQuoteCategory').value.trim();
 
@@ -39,6 +39,25 @@ function addQuote() {
         quotes.push(newQuote);
 
         saveQuotes();
+
+        // Post the new quote to the server
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newQuote)
+            });
+
+            if (response.ok) {
+                console.log('Quote added to the server');
+            } else {
+                console.error('Failed to add quote to the server');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
 
         document.getElementById('newQuoteText').value = '';
         document.getElementById('newQuoteCategory').value = '';
