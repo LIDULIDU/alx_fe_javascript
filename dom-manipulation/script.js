@@ -78,15 +78,16 @@ function filterQuotes() {
     );
 
     filteredQuotes.forEach(displayQuote);
+
     // Save the selected category to local storage
     localStorage.setItem('selectedCategory', selectedCategory);
 }
 
-// Function to update the categories dropdown
-function updateCategoriesDropdown() {
+// Function to populate categories dynamically in the dropdown
+function populateCategories() {
+    const categories = [...new Set(quotes.map(quote => quote.category))];
     const categoryFilter = document.getElementById('categoryFilter');
-    const categories = new Set(quotes.map(quote => quote.category));
-    
+
     // Clear existing options except the first one
     const firstOption = categoryFilter.options[0];
     categoryFilter.innerHTML = '';
@@ -99,6 +100,11 @@ function updateCategoriesDropdown() {
         option.textContent = category;
         categoryFilter.appendChild(option);
     });
+}
+
+// Function to update categories dropdown
+function updateCategoriesDropdown() {
+    populateCategories();
 }
 
 // Function to export quotes to a JSON file
@@ -136,7 +142,7 @@ function init() {
     filterQuotes(); // Use filterQuotes to display quotes initially
 
     // Populate categories dropdown
-    updateCategoriesDropdown();
+    populateCategories();
 
     // Set last selected filter category
     const lastSelectedCategory = localStorage.getItem('selectedCategory');
