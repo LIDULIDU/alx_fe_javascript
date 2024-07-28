@@ -134,19 +134,40 @@ function importFromJsonFile(event) {
     fileReader.readAsText(event.target.files[0]);
 }
 
-async function  syncQuotes() {
+async function fetchQuotesFromServer() {
     try {
         const response = await fetch(API_URL);
         const serverQuotes = await response.json();
         const newQuotes = serverQuotes.map(quote => ({ text: quote.title, category: 'Server' })); // Assuming 'title' as text and category as 'Server'
 
-        const mergedQuotes = [...quotes, ...newQuotes];
-        quotes = mergedQuotes;
+        const uniqueNewQuotes = newQuotes.filter(newQuote => !quotes.some(quote => quote.text === newQuote.text));
+        quotes = [...quotes, ...uniqueNewQuotes];
         saveQuotes();
         filterQuotes();
         updateCategoriesDropdown();
     } catch (error) {
         console.error("Failed to fetch quotes from server:", error);
+    }
+}
+
+async function syncQuotesWithServer() {
+    try {
+        // Send local quotes to the server
+        for (const quote of quotes) {
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(quote)
+            });
+        }
+
+        // Fetch the latest quotes from the server
+        await fetchQuotesFromServer();
+        console.log('Quotes synced with the server');
+    } catch (error) {
+        console.error('Error syncing quotes with the server:', error);
     }
 }
 
@@ -165,7 +186,10 @@ function init() {
         quoteDisplay.innerHTML = `<blockquote>"${lastViewedQuote.text}"</blockquote><p><em>Category: ${lastViewedQuote.category}</em></p>`;
     }
 
-    setInterval( syncQuotes(), 30000); // Fetch quotes from server every 30 seconds
+    setInterval(fetchQuotesFromServer, 30000); // Fetch quotes from server every 30 seconds
+
+    // Add sync quotes button event listener
+    document.getElementById('syncQuotes').addEventListener('click', syncQuotesWithServer);
 }
 
 window.onload = init;
