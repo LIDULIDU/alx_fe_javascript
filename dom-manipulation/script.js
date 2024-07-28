@@ -152,6 +152,28 @@ async function fetchQuotesFromServer() {
     }
 }
 
+async function syncQuotesWithServer() {
+    try {
+        // Send local quotes to the server
+        for (const quote of quotes) {
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(quote)
+            });
+        }
+
+        // Fetch the latest quotes from the server
+        await fetchQuotesFromServer();
+        console.log('Quotes synced with the server');
+        showMessage('Quotes synced with the server.');
+    } catch (error) {
+        console.error('Error syncing quotes with the server:', error);
+    }
+}
+
 function showMessage(message) {
     const messageBox = document.getElementById('messageBox');
     messageBox.textContent = message;
@@ -177,6 +199,9 @@ function init() {
     }
 
     setInterval(fetchQuotesFromServer, 30000); // Fetch quotes from server every 30 seconds
+
+    // Add sync quotes button event listener
+    document.getElementById('syncQuotes').addEventListener('click', syncQuotesWithServer);
 }
 
 window.onload = init;
