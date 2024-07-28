@@ -52,6 +52,7 @@ async function addQuote() {
 
             if (response.ok) {
                 console.log('Quote added to the server');
+                alert('Quote added and synced with the server.');
             } else {
                 console.error('Failed to add quote to the server');
             }
@@ -166,6 +167,7 @@ async function syncQuotesWithServer() {
         // Fetch the latest quotes from the server
         await fetchQuotesFromServer();
         console.log('Quotes synced with the server');
+        alert('Quotes synced with the server.');
     } catch (error) {
         console.error('Error syncing quotes with the server:', error);
     }
