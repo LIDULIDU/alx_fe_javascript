@@ -134,7 +134,7 @@ function importFromJsonFile(event) {
     fileReader.readAsText(event.target.files[0]);
 }
 
-async function fetchQuotesFromServer() {
+async function  syncQuotes() {
     try {
         const response = await fetch(API_URL);
         const serverQuotes = await response.json();
@@ -165,7 +165,7 @@ function init() {
         quoteDisplay.innerHTML = `<blockquote>"${lastViewedQuote.text}"</blockquote><p><em>Category: ${lastViewedQuote.category}</em></p>`;
     }
 
-    setInterval(fetchQuotesFromServer, 30000); // Fetch quotes from server every 30 seconds
+    setInterval( syncQuotes(), 30000); // Fetch quotes from server every 30 seconds
 }
 
 window.onload = init;
