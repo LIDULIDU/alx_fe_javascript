@@ -64,17 +64,6 @@ function displayQuote(quote) {
     quoteList.appendChild(li);
 }
 
-// Function to create and display the form for adding a new quote
-function createAddQuoteForm() {
-    const formContainer = document.createElement('div');
-    formContainer.innerHTML = `
-        <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-        <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-        <button onclick="addQuote()">Add Quote</button>
-    `;
-    document.body.appendChild(formContainer);
-}
-
 // Function to export quotes to a JSON file
 function exportToJsonFile() {
     const dataStr = JSON.stringify(quotes);
@@ -112,9 +101,6 @@ function init() {
     const showQuoteButton = document.getElementById('newQuote');
     showQuoteButton.addEventListener('click', showRandomQuote);
 
-    // Create the add quote form
-    createAddQuoteForm();
-
     // Add export button
     const exportButton = document.createElement('button');
     exportButton.textContent = 'Export Quotes to JSON';
@@ -122,12 +108,8 @@ function init() {
     document.body.appendChild(exportButton);
 
     // Add import file input
-    const importInput = document.createElement('input');
-    importInput.type = 'file';
-    importInput.id = 'importFile';
-    importInput.accept = '.json';
-    importInput.onchange = importFromJsonFile;
-    document.body.appendChild(importInput);
+    const importInput = document.getElementById('importFile');
+    importInput.style.display = 'block';
 
     // Display last viewed quote from session storage
     const lastViewedQuote = JSON.parse(sessionStorage.getItem('lastViewedQuote'));
